@@ -22,7 +22,8 @@ int	main(void)
 		}
 		printf("経過時間: %ld秒 %ldマイクロ秒\n", seconds, microseconds);
 		// 1秒待機
-		sleep(1);
+		// sleep(1);
+		usleep(1000000);
 	}
 	return (0);
 }
