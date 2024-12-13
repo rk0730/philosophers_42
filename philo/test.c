@@ -7,6 +7,7 @@ struct timeval start, current;
 
 typedef struct routine_arg {//1
 	int				n;
+	pthread_t	threads[10000];
 	pthread_mutex_t mutex;
 }	routine_arg;
 
@@ -18,9 +19,7 @@ void *routine(void *arg)
 
 	pthread_mutex_lock(&r_arg->mutex);//3
 	r_arg->n++;
-	r_arg->n++;
-	r_arg->n++;
-	usleep(100);
+	usleep(10);
 	gettimeofday(&current, NULL); // 現在時刻を取得
 	seconds = current.tv_sec - start.tv_sec;
 	microseconds = current.tv_usec - start.tv_usec;
@@ -29,7 +28,9 @@ void *routine(void *arg)
 		seconds -= 1;
 		microseconds += 1000000;
 	}
-	printf("経過時間: %ld秒 %ldマイクロ秒\n", seconds, microseconds);
+	// printf("経過時間: %ld秒 %ldマイクロ秒\n", seconds, microseconds);
+	if (r_arg->n % 1000 == 0)
+		printf("n = %d\n", r_arg->n);
 	pthread_mutex_unlock(&r_arg->mutex);//4
 
 	return NULL;
@@ -37,21 +38,37 @@ void *routine(void *arg)
 
 int main(void)
 {
-	pthread_t	threads[100000];
+	pthread_t	threads[10000];
 	routine_arg	arg;
 
 	gettimeofday(&start, NULL); // プログラム開始時の時刻を取得
 	arg.n = 0;
+	arg.threads = threads;
 	pthread_mutex_init(&arg.mutex, NULL);//2
 
-	for (int i = 0; i < 100000; i++)
+	for (int i = 0; i < 10000; i++)
 		pthread_create(&threads[i], NULL, routine, &arg);
+	
+	printf("create end\n");
+	sleep(3);
+	pthread_mutex_lock(&arg.mutex);
+	printf("3 n == %d\n", arg.n);
+	pthread_mutex_unlock(&arg.mutex);
 
-	for (int i = 0; i < 100000; i++)
-		pthread_join(threads[i], NULL);
-
-	printf("n = %d\n", arg.n);
-
+	// for (int i = 0; i < 10000; i++){
+	// 	pthread_detach(threads[i]);
+	// }
+	pthread_detach(threads[0]);
+	// pthread_join(threads[0], NULL);
+	// for (int i = 8500; i < 10000; i++)
+	// 	pthread_join(threads[i], NULL);
 	pthread_mutex_destroy(&arg.mutex);//5
+
+	printf("n == %d\n", arg.n);
+	sleep(3);
+	printf("n == %d\n", arg.n);
+
+
+
 	return 0;
 }
