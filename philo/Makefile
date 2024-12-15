@@ -4,6 +4,7 @@ CFLAGS := -Wall -Wextra -Werror
 # SRCS
 SRCDIR := .
 SRCS += $(SRCDIR)/ft_main.c
+SRCS += $(SRCDIR)/ft_arg.c
 
 UTILS := utils
 SRCS += $(SRCDIR)/$(UTILS)/ft_utils.c
