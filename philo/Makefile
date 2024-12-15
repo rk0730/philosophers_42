@@ -6,6 +6,7 @@ SRCDIR := .
 SRCS += $(SRCDIR)/ft_main.c
 SRCS += $(SRCDIR)/ft_arg.c
 SRCS += $(SRCDIR)/ft_routine.c
+SRCS += $(SRCDIR)/ft_message.c
 
 UTILS := utils
 SRCS += $(SRCDIR)/$(UTILS)/ft_utils.c
