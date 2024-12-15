@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkitao <rkitao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kitaoryoma <kitaoryoma@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:22:48 by rkitao            #+#    #+#             */
-/*   Updated: 2024/12/15 16:21:54 by rkitao           ###   ########.fr       */
+/*   Updated: 2024/12/15 18:11:09 by kitaoryoma       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ typedef struct s_common_data
 	pthread_mutex_t	lock_dead;
 	int				*eat_count;
 	pthread_mutex_t	lock_eat_count;
-
+	struct s_philo *philos;
+	pthread_t *threads;
+	
 }					t_common_data;
 
 // 各々が使うデータ　threadの引数になる
@@ -61,5 +63,6 @@ int					ft_atoi(const char *str);
 int					ft_is_all_digit(char *str);
 // src
 int					ft_arg(int argc, char **argv, t_common_data *param);
+void	*ft_routine(void *arg);
 
 #endif
