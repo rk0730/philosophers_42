@@ -6,7 +6,7 @@
 /*   By: rkitao <rkitao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:22:48 by rkitao            #+#    #+#             */
-/*   Updated: 2024/12/15 13:15:55 by rkitao           ###   ########.fr       */
+/*   Updated: 2024/12/15 13:27:18 by rkitao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ typedef struct s_param
 	int	num_philo_must_eat;
 }		t_param;
 
-
+// utils
+int	ft_isdigit(int c);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+int	ft_atoi(const char *str);
+// src
 int	ft_arg(int argc, char **argv, t_param *param);
 
 #endif

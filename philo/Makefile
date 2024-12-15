@@ -14,7 +14,7 @@ OBJDIR := objs
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%$(SUFFIX).o)
 
 
-INCDIR := includes
+INCDIR := .
 INCLUDES := -I$(INCDIR)
 
 PJT := philo
