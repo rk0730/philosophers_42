@@ -9,6 +9,7 @@ int	main(void)
 
 	struct timeval start, current;
 	gettimeofday(&start, NULL); // プログラム開始時の時刻を取得
+	printf("start %ld", start.tv_sec * 1000 + start.tv_usec / 1000);
 	while (1)
 	{
 		gettimeofday(&current, NULL); // 現在時刻を取得
