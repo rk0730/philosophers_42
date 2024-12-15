@@ -6,7 +6,7 @@
 /*   By: rkitao <rkitao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:22:48 by rkitao            #+#    #+#             */
-/*   Updated: 2024/12/15 16:13:21 by rkitao           ###   ########.fr       */
+/*   Updated: 2024/12/15 16:21:54 by rkitao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #  define RKITAO(fmt, ...)
 # endif
 
+// 全員が共通で使うデータ
 typedef struct s_common_data
 {
 	//引数からもらう情報
@@ -32,11 +33,26 @@ typedef struct s_common_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_philo_must_eat;
+	pthread_mutex_t	lock_arg;
 	pthread_mutex_t	*forks;
 	int				dead;
+	pthread_mutex_t	lock_dead;
 	int				*eat_count;
+	pthread_mutex_t	lock_eat_count;
 
 }					t_common_data;
+
+// 各々が使うデータ　threadの引数になる
+typedef struct s_philo
+{
+	t_common_data	*data;
+	// 1からnum_of_philo
+	int				id;
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*r_fork;
+	int				*my_eat_count;
+
+}					t_philo;
 
 // utils
 int					ft_isdigit(int c);
