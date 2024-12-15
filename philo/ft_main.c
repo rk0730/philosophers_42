@@ -6,7 +6,7 @@
 /*   By: kitaoryoma <kitaoryoma@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:32:12 by rkitao            #+#    #+#             */
-/*   Updated: 2024/12/15 18:19:02 by kitaoryoma       ###   ########.fr       */
+/*   Updated: 2024/12/15 18:30:45 by kitaoryoma       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,11 @@ void	ft_init_common_data(t_common_data *data)
 	pthread_mutex_init(&data->lock_eat_count, NULL);
 }
 
-int	main(int argc, char **argv)
+void	ft_gen_threads(t_common_data *data)
 {
-	t_common_data	*data;
+	int	i;
 
-	data = (t_common_data *)malloc(sizeof(t_common_data));
-	RKITAO("debug mode\n");
-	if (ft_arg(argc, argv, data) == 1)
-		exit(EXIT_FAILURE);
-	ft_init_common_data(data);
-	RKITAO("init\n");
-	// スレッドを作成する
-	int i = 0;
+	i = 0;
 	pthread_mutex_lock(&data->lock_arg);
 	while (i < data->num_of_philo)
 	{
@@ -56,13 +49,28 @@ int	main(int argc, char **argv)
 		if (i == 0)
 			data->philos[i].l_fork = &data->forks[data->num_of_philo - 1];
 		else
-			data->philos[i] .l_fork = &data->forks[i - 1];
+			data->philos[i].l_fork = &data->forks[i - 1];
 		data->philos[i].r_fork = &data->forks[i];
 		data->philos[i].my_eat_count = &data->eat_count[i];
-		pthread_create(&(data->threads[i]), NULL, ft_routine, &(data->philos[i]));
+		pthread_create(&(data->threads[i]), NULL, ft_routine,
+			&(data->philos[i]));
 		i++;
 	}
 	pthread_mutex_unlock(&data->lock_arg);
+}
+
+int	main(int argc, char **argv)
+{
+	t_common_data	*data;
+	int				i;
+
+	data = (t_common_data *)malloc(sizeof(t_common_data));
+	RKITAO("debug mode\n");
+	if (ft_arg(argc, argv, data) == 1)
+		exit(EXIT_FAILURE);
+	ft_init_common_data(data);
+	// スレッドを作成する
+	ft_gen_threads(data);
 	// スレッドの終了を待つ
 	i = 0;
 	while (i < data->num_of_philo)
