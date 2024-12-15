@@ -6,18 +6,16 @@
 /*   By: rkitao <rkitao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 13:09:48 by rkitao            #+#    #+#             */
-/*   Updated: 2024/12/15 13:50:54 by rkitao           ###   ########.fr       */
+/*   Updated: 2024/12/15 16:12:14 by rkitao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_arg(int argc, char **argv, t_param *param)
+int	ft_arg(int argc, char **argv, t_common_data *data)
 {
 	int	i;
 
-	(void)argv;
-	(void)param;
 	// 引数の数が正しいか確認
 	if (argc < 5 || argc > 6)
 	{
@@ -43,18 +41,18 @@ int	ft_arg(int argc, char **argv, t_param *param)
 		return (1);
 	}
 	// 引数を数値に変換
-	param->num_of_philo = ft_atoi(argv[1]);
-	param->time_to_die = ft_atoi(argv[2]);
-	param->time_to_eat = ft_atoi(argv[3]);
-	param->time_to_sleep = ft_atoi(argv[4]);
+	data->num_of_philo = ft_atoi(argv[1]);
+	data->time_to_die = ft_atoi(argv[2]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		param->num_philo_must_eat = ft_atoi(argv[5]);
+		data->num_philo_must_eat = ft_atoi(argv[5]);
 	else
-		param->num_philo_must_eat = -1;
+		data->num_philo_must_eat = -1;
 	// 引数が不正な場合の処理
-	if (param->num_of_philo <= 0 || param->time_to_die <= 0
-		|| param->time_to_eat <= 0 || param->time_to_sleep <= 0 || (argc == 6
-			&& param->num_philo_must_eat <= 0))
+	if (data->num_of_philo <= 0 || data->time_to_die <= 0
+		|| data->time_to_eat <= 0 || data->time_to_sleep <= 0 || (argc == 6
+			&& data->num_philo_must_eat <= 0))
 	{
 		write(STDERR_FILENO, "Invalid argument\n", 17);
 		return (1);
