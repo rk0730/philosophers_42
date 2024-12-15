@@ -6,7 +6,7 @@
 /*   By: kitaoryoma <kitaoryoma@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:32:12 by rkitao            #+#    #+#             */
-/*   Updated: 2024/12/15 18:30:45 by kitaoryoma       ###   ########.fr       */
+/*   Updated: 2024/12/15 19:01:18 by kitaoryoma       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_init_common_data(t_common_data *data)
 	data->dead = 0;
 	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->num_of_philo);
 	data->threads = (pthread_t *)malloc(sizeof(pthread_t) * data->num_of_philo);
-	pthread_mutex_init(&data->lock_arg, NULL);
+	pthread_mutex_init(&data->lock_info, NULL);
 	pthread_mutex_init(&data->lock_dead, NULL);
 	pthread_mutex_init(&data->lock_eat_count, NULL);
 }
@@ -40,7 +40,7 @@ void	ft_gen_threads(t_common_data *data)
 	int	i;
 
 	i = 0;
-	pthread_mutex_lock(&data->lock_arg);
+	pthread_mutex_lock(&data->lock_info);
 	while (i < data->num_of_philo)
 	{
 		// t_philoの初期化
@@ -56,7 +56,8 @@ void	ft_gen_threads(t_common_data *data)
 			&(data->philos[i]));
 		i++;
 	}
-	pthread_mutex_unlock(&data->lock_arg);
+	gettimeofday(&data->start_time, NULL);
+	pthread_mutex_unlock(&data->lock_info);
 }
 
 int	main(int argc, char **argv)

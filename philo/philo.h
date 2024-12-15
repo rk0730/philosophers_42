@@ -6,7 +6,7 @@
 /*   By: kitaoryoma <kitaoryoma@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:22:48 by rkitao            #+#    #+#             */
-/*   Updated: 2024/12/15 18:11:09 by kitaoryoma       ###   ########.fr       */
+/*   Updated: 2024/12/15 19:00:35 by kitaoryoma       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/time.h>
 
 # ifdef RKITAO_DEBUG
 #  define RKITAO(fmt, ...) printf(fmt, ##__VA_ARGS__)
@@ -33,7 +34,8 @@ typedef struct s_common_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_philo_must_eat;
-	pthread_mutex_t	lock_arg;
+	struct timeval	start_time;
+	pthread_mutex_t	lock_info;
 	pthread_mutex_t	*forks;
 	int				dead;
 	pthread_mutex_t	lock_dead;
@@ -53,7 +55,7 @@ typedef struct s_philo
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
 	int				*my_eat_count;
-
+	struct timeval last_meal_time;
 }					t_philo;
 
 // utils
