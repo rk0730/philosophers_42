@@ -6,7 +6,7 @@
 /*   By: kitaoryoma <kitaoryoma@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 12:02:53 by kitaoryoma        #+#    #+#             */
-/*   Updated: 2024/12/18 17:08:04 by kitaoryoma       ###   ########.fr       */
+/*   Updated: 2024/12/18 18:18:20 by kitaoryoma       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int	ft_get_args(t_common_data *data, t_data_type type)
 }
 
 // startからの経過時間（ミリ秒）を返す
-unsigned int	ft_get_time(t_common_data *data)
+int	ft_get_time(t_common_data *data)
 {
 	struct timeval	now;
-	unsigned int	result;
+	int				result;
 
 	gettimeofday(&now, NULL);
 	pthread_mutex_lock(&data->lock_data);
@@ -48,6 +48,23 @@ unsigned int	ft_get_time(t_common_data *data)
 			- data->start_time.tv_usec) / 1000;
 	pthread_mutex_unlock(&data->lock_data);
 	return (result);
+}
+
+static int	ft_is_dead(t_common_data *data)
+{
+	int	num_of_philo;
+	int	i;
+
+	num_of_philo = ft_get_args(data, NUM_OF_PHILO);
+	i = 0;
+	while (i < num_of_philo)
+	{
+		if (data->philos[i].last_meal_time
+			- ft_get_time(data) > ft_get_args(data, TIME_TO_DIE))
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 // 誰かが死んでいる、あるいは全員規定回数食べ切っているかどうか確認する
@@ -58,7 +75,7 @@ int	ft_is_finished(t_common_data *data)
 
 	result = 0;
 	pthread_mutex_lock(&data->lock_data);
-	if (data->dead > 0)
+	if (ft_is_dead(data) > 0)
 		result = 1;
 	if (ft_get_args(data, NUM_PHILO_MUST_EAT) != -1)
 	{
@@ -78,7 +95,7 @@ int	ft_is_finished(t_common_data *data)
 
 void	ft_message(t_philo *philo, t_message_type type)
 {
-	unsigned int	time;
+	int	time;
 
 	time = ft_get_time(philo->data);
 	if (ft_is_finished(philo->data) == 0)

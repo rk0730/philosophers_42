@@ -6,7 +6,7 @@
 /*   By: kitaoryoma <kitaoryoma@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:32:12 by rkitao            #+#    #+#             */
-/*   Updated: 2024/12/18 17:07:04 by kitaoryoma       ###   ########.fr       */
+/*   Updated: 2024/12/18 18:15:26 by kitaoryoma       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ void	ft_init_common_data(t_common_data *data)
 		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
-	data->dead = 0;
+	// data->dead = 0;
 	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->args->num_of_philo);
 	data->threads = (pthread_t *)malloc(sizeof(pthread_t) * data->args->num_of_philo);
 	pthread_mutex_init(&data->lock_args, NULL);
+	gettimeofday(&data->start_time, NULL);
 }
 
 void	ft_gen_threads(t_common_data *data)
@@ -52,9 +53,9 @@ void	ft_gen_threads(t_common_data *data)
 		data->philos[i].my_eat_count = &data->eat_count[i];
 		pthread_create(&(data->threads[i]), NULL, ft_routine,
 			&(data->philos[i]));
+		data->philos[i].last_meal_time = 0;
 		i++;
 	}
-	gettimeofday(&data->start_time, NULL);
 	pthread_mutex_unlock(&data->lock_args);
 }
 
