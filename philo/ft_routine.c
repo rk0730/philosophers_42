@@ -24,8 +24,8 @@ void	*ft_routine(void *arg)
 	while (1)
 	{
 		ft_get_fork(philo);
-		usleep(ft_get_args(philo->data, TIME_TO_EAT) * 1000);
 		philo->last_meal_time = ft_get_time(philo->data);
+		usleep(ft_get_args(philo->data, TIME_TO_EAT) * 1000);
 		pthread_mutex_unlock(philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
 		ft_message(philo, SLEEP);
