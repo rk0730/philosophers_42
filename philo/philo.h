@@ -6,7 +6,7 @@
 /*   By: kitaoryoma <kitaoryoma@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:22:48 by rkitao            #+#    #+#             */
-/*   Updated: 2024/12/18 18:18:58 by kitaoryoma       ###   ########.fr       */
+/*   Updated: 2024/12/18 21:35:23 by kitaoryoma       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef enum e_message_type
 	SECOND_FORK,
 	SLEEP,
 	THINK,
-	DIE,
 }					t_message_type;
 
 typedef enum e_data_type
@@ -91,6 +90,7 @@ int					ft_is_all_digit(char *str);
 int					ft_arg(int argc, char **argv, t_common_data *param);
 void				*ft_routine(void *arg);
 int					ft_get_time(t_common_data *data);
+int					ft_is_dead(t_common_data *data);
 int					ft_is_finished(t_common_data *data);
 int					ft_get_args(t_common_data *data, t_data_type type);
 void				ft_message(t_philo *philo, t_message_type type);

@@ -6,7 +6,7 @@
 /*   By: kitaoryoma <kitaoryoma@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:32:12 by rkitao            #+#    #+#             */
-/*   Updated: 2024/12/18 18:15:26 by kitaoryoma       ###   ########.fr       */
+/*   Updated: 2024/12/18 21:32:28 by kitaoryoma       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,14 @@ int	main(int argc, char **argv)
 	// スレッドを作成する
 	ft_gen_threads(data);
 	// スレッドの終了を待つ
+	while (!ft_is_finished(data))
+		(void)argc;
+	if (ft_is_dead(data) > 0)
+		printf("%u %d died\n", ft_get_time(data), ft_is_dead(data));
 	i = 0;
 	while (i < data->args->num_of_philo)
 	{
-		pthread_join(data->threads[i], NULL);
+		pthread_detach(data->threads[i]);
 		i++;
 	}
 	return (0);
