@@ -6,7 +6,7 @@
 /*   By: kitaoryoma <kitaoryoma@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:22:48 by rkitao            #+#    #+#             */
-/*   Updated: 2024/12/15 19:54:36 by kitaoryoma       ###   ########.fr       */
+/*   Updated: 2024/12/18 12:23:18 by kitaoryoma       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,16 @@ typedef enum e_message_type
 	DIE,
 }					t_message_type;
 
+typedef enum e_data_type
+{
+	NUM_OF_PHILO,
+	TIME_TO_DIE,
+	TIME_TO_EAT,
+	TIME_TO_SLEEP,
+	NUM_PHILO_MUST_EAT,
+
+}					t_data_type;
+
 // utils
 int					ft_isdigit(int c);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -77,6 +87,7 @@ int					ft_arg(int argc, char **argv, t_common_data *param);
 void				*ft_routine(void *arg);
 unsigned int		ft_get_time(t_common_data *data);
 int					ft_is_finished(t_common_data *data);
+int					ft_get_data(t_common_data *data, t_data_type type);
 void				ft_message(t_philo *philo, t_message_type type);
 
 #endif

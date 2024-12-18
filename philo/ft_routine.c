@@ -6,7 +6,7 @@
 /*   By: kitaoryoma <kitaoryoma@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:08:53 by kitaoryoma        #+#    #+#             */
-/*   Updated: 2024/12/15 19:58:55 by kitaoryoma       ###   ########.fr       */
+/*   Updated: 2024/12/18 12:22:24 by kitaoryoma       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,12 @@ void	*ft_routine(void *arg)
 	philo = (t_philo *)arg;
 	RKITAO("%d start\n", philo->id);
 	ft_get_fork(philo);
+	usleep(ft_get_data(philo->data, TIME_TO_EAT) * 1000);
+	pthread_mutex_unlock(philo->l_fork);
+	pthread_mutex_unlock(philo->r_fork);
+	ft_message(philo, SLEEP);
+	usleep(ft_get_data(philo->data, TIME_TO_SLEEP) * 1000);
+	ft_message(philo, THINK);
+
 	return (NULL);
 }
