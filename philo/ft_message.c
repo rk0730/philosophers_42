@@ -5,12 +5,36 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kitaoryoma <kitaoryoma@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/15 19:10:51 by kitaoryoma        #+#    #+#             */
-/*   Updated: 2024/12/15 19:57:53 by kitaoryoma       ###   ########.fr       */
+/*   Created: 2024/12/18 12:02:53 by kitaoryoma        #+#    #+#             */
+/*   Updated: 2024/12/18 12:18:11 by kitaoryoma       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	ft_get_data(t_common_data *data, t_data_type type)
+{
+	int	result;
+
+	pthread_mutex_lock(&data->lock_info);
+	if (type == NUM_OF_PHILO)
+		result = data->num_of_philo;
+	else if (type == TIME_TO_DIE)
+		result = data->time_to_die;
+	else if (type == TIME_TO_EAT)
+		result = data->time_to_eat;
+	else if (type == TIME_TO_SLEEP)
+		result = data->time_to_sleep;
+	else if (type == NUM_PHILO_MUST_EAT)
+		result = data->num_philo_must_eat;
+	else
+	{
+		result = -1;
+		printf("error in ft_get_data");
+	}
+	pthread_mutex_unlock(&data->lock_info);
+	return (result);
+}
 
 // startからの経過時間（ミリ秒）を返す
 unsigned int	ft_get_time(t_common_data *data)
