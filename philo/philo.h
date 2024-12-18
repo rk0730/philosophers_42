@@ -6,7 +6,7 @@
 /*   By: kitaoryoma <kitaoryoma@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:22:48 by rkitao            #+#    #+#             */
-/*   Updated: 2024/12/18 12:23:18 by kitaoryoma       ###   ########.fr       */
+/*   Updated: 2024/12/18 17:42:13 by kitaoryoma       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@
 #  define RKITAO(fmt, ...)
 # endif
 
-// 全員が共通で使うデータ
-typedef struct s_common_data
+typedef struct s_args
 {
 	//引数からもらう情報
 	int				num_of_philo;
@@ -34,13 +33,19 @@ typedef struct s_common_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_philo_must_eat;
-	struct timeval	start_time;
-	pthread_mutex_t	lock_info;
+}			t_args;
+
+// 全員が共通で使うデータ
+typedef struct s_common_data
+{
+	t_args			*args;
+	pthread_mutex_t	lock_args;
 	pthread_mutex_t	*forks;
+	// そのほか全員のt_philoのデータをlockする
+	pthread_mutex_t	lock_data;
+	struct timeval	start_time;
 	int				dead;
-	pthread_mutex_t	lock_dead;
 	int				*eat_count;
-	pthread_mutex_t	lock_eat_count;
 	struct s_philo	*philos;
 	pthread_t		*threads;
 
@@ -55,7 +60,7 @@ typedef struct s_philo
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
 	int				*my_eat_count;
-	struct timeval	last_meal_time;
+	unsigned int	last_meal_time;
 }					t_philo;
 
 typedef enum e_message_type
@@ -87,7 +92,7 @@ int					ft_arg(int argc, char **argv, t_common_data *param);
 void				*ft_routine(void *arg);
 unsigned int		ft_get_time(t_common_data *data);
 int					ft_is_finished(t_common_data *data);
-int					ft_get_data(t_common_data *data, t_data_type type);
+int					ft_get_args(t_common_data *data, t_data_type type);
 void				ft_message(t_philo *philo, t_message_type type);
 
 #endif

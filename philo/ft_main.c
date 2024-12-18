@@ -6,7 +6,7 @@
 /*   By: kitaoryoma <kitaoryoma@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:32:12 by rkitao            #+#    #+#             */
-/*   Updated: 2024/12/15 19:01:18 by kitaoryoma       ###   ########.fr       */
+/*   Updated: 2024/12/18 17:07:04 by kitaoryoma       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,19 @@ void	ft_init_common_data(t_common_data *data)
 
 	//　dataの初期化
 	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
-			* data->num_of_philo);
-	data->eat_count = (int *)malloc(sizeof(int) * data->num_of_philo);
+			* data->args->num_of_philo);
+	data->eat_count = (int *)malloc(sizeof(int) * data->args->num_of_philo);
 	i = 0;
-	while (i < data->num_of_philo)
+	while (i < data->args->num_of_philo)
 	{
 		data->eat_count[i] = 0;
 		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
 	data->dead = 0;
-	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->num_of_philo);
-	data->threads = (pthread_t *)malloc(sizeof(pthread_t) * data->num_of_philo);
-	pthread_mutex_init(&data->lock_info, NULL);
-	pthread_mutex_init(&data->lock_dead, NULL);
-	pthread_mutex_init(&data->lock_eat_count, NULL);
+	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->args->num_of_philo);
+	data->threads = (pthread_t *)malloc(sizeof(pthread_t) * data->args->num_of_philo);
+	pthread_mutex_init(&data->lock_args, NULL);
 }
 
 void	ft_gen_threads(t_common_data *data)
@@ -40,14 +38,14 @@ void	ft_gen_threads(t_common_data *data)
 	int	i;
 
 	i = 0;
-	pthread_mutex_lock(&data->lock_info);
-	while (i < data->num_of_philo)
+	pthread_mutex_lock(&data->lock_args);
+	while (i < data->args->num_of_philo)
 	{
 		// t_philoの初期化
 		data->philos[i].data = data;
 		data->philos[i].id = i + 1;
 		if (i == 0)
-			data->philos[i].l_fork = &data->forks[data->num_of_philo - 1];
+			data->philos[i].l_fork = &data->forks[data->args->num_of_philo - 1];
 		else
 			data->philos[i].l_fork = &data->forks[i - 1];
 		data->philos[i].r_fork = &data->forks[i];
@@ -57,7 +55,7 @@ void	ft_gen_threads(t_common_data *data)
 		i++;
 	}
 	gettimeofday(&data->start_time, NULL);
-	pthread_mutex_unlock(&data->lock_info);
+	pthread_mutex_unlock(&data->lock_args);
 }
 
 int	main(int argc, char **argv)
@@ -74,7 +72,7 @@ int	main(int argc, char **argv)
 	ft_gen_threads(data);
 	// スレッドの終了を待つ
 	i = 0;
-	while (i < data->num_of_philo)
+	while (i < data->args->num_of_philo)
 	{
 		pthread_join(data->threads[i], NULL);
 		i++;
