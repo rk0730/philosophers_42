@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_arg.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkitao <rkitao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kitaoryoma <kitaoryoma@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 13:09:48 by rkitao            #+#    #+#             */
-/*   Updated: 2024/12/15 16:12:14 by rkitao           ###   ########.fr       */
+/*   Updated: 2024/12/18 14:42:11 by kitaoryoma       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ft_arg(int argc, char **argv, t_common_data *data)
 {
 	int	i;
 
+	data->args = (t_args *)malloc(sizeof(t_args));
 	// 引数の数が正しいか確認
 	if (argc < 5 || argc > 6)
 	{
@@ -41,18 +42,18 @@ int	ft_arg(int argc, char **argv, t_common_data *data)
 		return (1);
 	}
 	// 引数を数値に変換
-	data->num_of_philo = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
+	data->args->num_of_philo = ft_atoi(argv[1]);
+	data->args->time_to_die = ft_atoi(argv[2]);
+	data->args->time_to_eat = ft_atoi(argv[3]);
+	data->args->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		data->num_philo_must_eat = ft_atoi(argv[5]);
+		data->args->num_philo_must_eat = ft_atoi(argv[5]);
 	else
-		data->num_philo_must_eat = -1;
+		data->args->num_philo_must_eat = -1;
 	// 引数が不正な場合の処理
-	if (data->num_of_philo <= 0 || data->time_to_die <= 0
-		|| data->time_to_eat <= 0 || data->time_to_sleep <= 0 || (argc == 6
-			&& data->num_philo_must_eat <= 0))
+	if (data->args->num_of_philo <= 0 || data->args->time_to_die <= 0
+		|| data->args->time_to_eat <= 0 || data->args->time_to_sleep <= 0 || (argc == 6
+			&& data->args->num_philo_must_eat <= 0))
 	{
 		write(STDERR_FILENO, "Invalid argument\n", 17);
 		return (1);
