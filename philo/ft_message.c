@@ -6,7 +6,7 @@
 /*   By: kitaoryoma <kitaoryoma@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 12:02:53 by kitaoryoma        #+#    #+#             */
-/*   Updated: 2024/12/18 18:20:38 by kitaoryoma       ###   ########.fr       */
+/*   Updated: 2024/12/18 21:34:17 by kitaoryoma       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	ft_message(t_philo *philo, t_message_type type)
 	int	time;
 
 	time = ft_get_time(philo->data);
+	RKITAO("ft_is_finished %d at %d\n", ft_is_finished(philo->data), ft_get_time(philo->data));
 	if (ft_is_finished(philo->data) == 0)
 	{
 		if (type == FIRST_FORK || type == SECOND_FORK)
@@ -65,7 +66,5 @@ void	ft_message(t_philo *philo, t_message_type type)
 			printf("%u %d is sleeping\n", time, philo->id);
 		if (type == THINK)
 			printf("%u %d is thinking\n", time, philo->id);
-		if (type == DIE)
-			printf("%u %d died\n", time, philo->id);
 	}
 }

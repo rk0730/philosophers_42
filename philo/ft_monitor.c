@@ -6,13 +6,14 @@
 /*   By: kitaoryoma <kitaoryoma@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 12:29:34 by kitaoryoma        #+#    #+#             */
-/*   Updated: 2024/12/18 18:20:26 by kitaoryoma       ###   ########.fr       */
+/*   Updated: 2024/12/18 21:34:03 by kitaoryoma       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	ft_is_dead(t_common_data *data)
+// 誰かが死んでいるなら、その人のidを返す
+int	ft_is_dead(t_common_data *data)
 {
 	int	num_of_philo;
 	int	i;
@@ -21,9 +22,8 @@ static int	ft_is_dead(t_common_data *data)
 	i = 0;
 	while (i < num_of_philo)
 	{
-		if (data->philos[i].last_meal_time
-			- ft_get_time(data) > ft_get_args(data, TIME_TO_DIE))
-			return (1);
+		if (ft_get_time(data) - data->philos[i].last_meal_time > ft_get_args(data, TIME_TO_DIE))
+			return (i+1);
 		i++;
 	}
 	return (0);
