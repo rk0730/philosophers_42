@@ -6,7 +6,9 @@ int	ft_is_dead(t_common_data *data)
 	int	num_of_philo;
 	int	i;
 
+	printf("before get_args\n");
 	num_of_philo = ft_get_args(data, NUM_OF_PHILO);
+	printf("num of philo: %d\n", num_of_philo);
 	i = 0;
 	while (i < num_of_philo)
 	{
@@ -25,12 +27,15 @@ int	ft_is_finished(t_common_data *data)
 
 	result = 0;
 	pthread_mutex_lock(&data->lock_data);
+	printf("lock_args %d\n", pthread_mutex_trylock(&(data->lock_args)));
 	if (ft_is_dead(data) > 0)
 		result = 1;
+	printf("------------------\n");
 	if (ft_get_args(data, NUM_PHILO_MUST_EAT) != -1)
 	{
 		i = 0;
-		while (i < data->args->num_of_philo)
+		// while (i < data->args->num_of_philo)
+		while (i < ft_get_args(data, NUM_OF_PHILO))
 		{
 			if (data->eat_count[i] < data->args->num_philo_must_eat)
 				break ;
@@ -39,6 +44,7 @@ int	ft_is_finished(t_common_data *data)
 		if (i == data->args->num_of_philo)
 			result = 1;
 	}
+	printf("lock_args --- %d\n", pthread_mutex_trylock(&(data->lock_args)));
 	pthread_mutex_unlock(&data->lock_data);
 	return (result);
 }

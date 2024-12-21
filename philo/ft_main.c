@@ -18,7 +18,8 @@ void	ft_init_common_data(t_common_data *data)
 	// data->dead = 0;
 	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->args->num_of_philo);
 	data->threads = (pthread_t *)malloc(sizeof(pthread_t) * data->args->num_of_philo);
-	pthread_mutex_init(&data->lock_args, NULL);
+	pthread_mutex_init(&(data->lock_args), NULL);
+	pthread_mutex_init(&data->lock_data, NULL);
 	gettimeofday(&data->start_time, NULL);
 }
 
@@ -27,7 +28,7 @@ void	ft_gen_threads(t_common_data *data)
 	int	i;
 
 	i = 0;
-	pthread_mutex_lock(&data->lock_args);
+	pthread_mutex_lock(&(data->lock_args));
 	while (i < data->args->num_of_philo)
 	{
 		// t_philoの初期化
@@ -44,7 +45,8 @@ void	ft_gen_threads(t_common_data *data)
 		data->philos[i].last_meal_time = 0;
 		i++;
 	}
-	pthread_mutex_unlock(&data->lock_args);
+	printf("finish ft_gen_thread\n");
+	pthread_mutex_unlock(&(data->lock_args));
 }
 
 int	main(int argc, char **argv)
@@ -58,16 +60,20 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	ft_init_common_data(data);
 	// スレッドを作成する
+	RKITAO("before thread\n");
 	ft_gen_threads(data);
+	RKITAO("after thread\n");
 	// スレッドの終了を待つ
 	while (!ft_is_finished(data))
 		(void)argc;
+	RKITAO("point1\n");
 	if (ft_is_dead(data) > 0)
 		printf("%u %d died\n", ft_get_time(data), ft_is_dead(data));
 	i = 0;
 	while (i < data->args->num_of_philo)
 	{
-		pthread_detach(data->threads[i]);
+		pthread_join(data->threads[i], NULL);
+		// pthread_detach(data->threads[i]);
 		i++;
 	}
 	return (0);
