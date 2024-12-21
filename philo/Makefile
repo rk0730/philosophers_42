@@ -40,7 +40,7 @@ endif
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ -lpthread -DNOLOCK
 
 rkitao:
 	make RKITAO_DEBUG=1
@@ -50,7 +50,7 @@ $(OBJDIR):
 	@mkdir -p $(OBJDIR)/$(UTILS)
 
 $(OBJDIR)/%$(SUFFIX).o: $(SRCDIR)/%.c | $(OBJDIR)
-	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -o $@ -c $<
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -o $@ -c $< -DNOLOCK
 
 clean:
 	rm -rf $(OBJDIR)
