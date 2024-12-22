@@ -7,3 +7,6 @@ a.out
 philo
 !philo/
 philo_rkitao
+
+# devontainer設定ファイル
+.devcontainer/
