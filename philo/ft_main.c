@@ -25,6 +25,26 @@ void	ft_init_common_data(t_common_data *data)
 	gettimeofday(&data->start_time, NULL);
 }
 
+void	ft_cleanup_common_data(t_common_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->args->num_of_philo)
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&(data->lock_args));
+	pthread_mutex_destroy(&data->lock_data);
+	free(data->forks);
+	free(data->eat_count);
+	free(data->philos);
+	free(data->threads);
+	free(data->args);
+	free(data);
+}
+
 void	ft_gen_threads(t_common_data *data)
 {
 	int	i;
@@ -80,6 +100,7 @@ int	main(int argc, char **argv)
 		pthread_join(data->threads[i], NULL);
 		i++;
 	}
+	ft_cleanup_common_data(data);
 	pthread_mutex_destroy(&g_lock_print);
 	return (0);
 }
