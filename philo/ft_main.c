@@ -75,8 +75,7 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < data->args->num_of_philo)
 	{
-		pthread_join(data->threads[i], NULL);
-		// pthread_detach(data->threads[i]);
+		pthread_detach(data->threads[i]);
 		i++;
 	}
 	pthread_mutex_destroy(&g_lock_print);

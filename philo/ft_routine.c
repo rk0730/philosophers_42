@@ -4,22 +4,13 @@
 void	ft_get_fork(t_philo *philo)
 {
 	RKITAO("fork start %d\n", philo->id);
-	int l = pthread_mutex_trylock(philo->l_fork);
-	int r = pthread_mutex_trylock(philo->r_fork);
-	lock_printf("%d l_fork %d r_fork %d\n",philo->id, l, r);
 	if (philo->id % 2 == 1)
-	{
-		RKITAO("lock l_fork\n");
 		pthread_mutex_lock(philo->l_fork);
-	}
 	else
-	{
-		RKITAO("lock r_fork\n");
 		pthread_mutex_lock(philo->r_fork);
-	}
 	RKITAO("first fork\n");
 	ft_message(philo, FIRST_FORK);
-	if (philo->id % 2 == 1)	
+	if (philo->id % 2 == 1)
 		pthread_mutex_lock(philo->r_fork);
 	else
 		pthread_mutex_lock(philo->l_fork);
@@ -45,8 +36,6 @@ void	*ft_routine(void *arg)
 		ft_message(philo, SLEEP);
 		usleep(ft_get_args(philo->data, TIME_TO_SLEEP) * 1000);
 		ft_message(philo, THINK);
-		RKITAO("break\n");
-		break;
 	}
 	return (NULL);
 }
