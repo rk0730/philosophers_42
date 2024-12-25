@@ -31,6 +31,11 @@ void	*ft_routine(void *arg)
 		ft_message(philo, SLEEP);
 		usleep(ft_get_args(philo->data, TIME_TO_SLEEP) * 1000);
 		ft_message(philo, THINK);
+		if (ft_is_finished(philo->data))
+		{
+			RKITAO("%d end\n", philo->id);
+			break ;
+		}
 	}
 	return (NULL);
 }
