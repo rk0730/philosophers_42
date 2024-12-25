@@ -6,7 +6,7 @@ void	ft_get_fork(t_philo *philo)
 	RKITAO("fork start %d\n", philo->id);
 	int l = pthread_mutex_trylock(philo->l_fork);
 	int r = pthread_mutex_trylock(philo->r_fork);
-	printf("%d l_fork %d r_fork %d\n",philo->id, l, r);
+	lock_printf("%d l_fork %d r_fork %d\n",philo->id, l, r);
 	if (philo->id % 2 == 1)
 	{
 		RKITAO("lock l_fork\n");

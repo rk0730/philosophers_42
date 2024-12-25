@@ -6,12 +6,15 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <stdarg.h>
 
 # ifdef RKITAO_DEBUG
-#  define RKITAO(fmt, ...) printf(fmt, ##__VA_ARGS__)
+#  define RKITAO(fmt, ...) lock_printf(fmt, ##__VA_ARGS__)
 # else
 #  define RKITAO(fmt, ...)
 # endif
+
+extern pthread_mutex_t		g_lock_print;
 
 typedef struct s_args
 {
@@ -82,5 +85,7 @@ int					ft_is_dead(t_common_data *data);
 int					ft_is_finished(t_common_data *data);
 int					ft_get_args(t_common_data *data, t_data_type type);
 void				ft_message(t_philo *philo, t_message_type type);
+void	lock_printf(const char *fmt, ...);
+
 
 #endif

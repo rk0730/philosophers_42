@@ -1,5 +1,7 @@
 #include "philo.h"
 
+pthread_mutex_t g_lock_print;
+
 void	ft_init_common_data(t_common_data *data)
 {
 	int	i;
@@ -45,7 +47,7 @@ void	ft_gen_threads(t_common_data *data)
 		data->philos[i].last_meal_time = 0;
 		i++;
 	}
-	printf("finish ft_gen_thread\n");
+	lock_printf("finish ft_gen_thread\n");
 	pthread_mutex_unlock(&(data->lock_args));
 }
 
@@ -54,6 +56,7 @@ int	main(int argc, char **argv)
 	t_common_data	*data;
 	int				i;
 
+	pthread_mutex_init(&g_lock_print, NULL);
 	data = (t_common_data *)malloc(sizeof(t_common_data));
 	RKITAO("debug mode\n");
 	if (ft_arg(argc, argv, data) == 1)
@@ -68,7 +71,7 @@ int	main(int argc, char **argv)
 		(void)argc;
 	RKITAO("point1\n");
 	if (ft_is_dead(data) > 0)
-		printf("%u %d died\n", ft_get_time(data), ft_is_dead(data));
+		lock_printf("%u %d died\n", ft_get_time(data), ft_is_dead(data));
 	i = 0;
 	while (i < data->args->num_of_philo)
 	{
@@ -76,5 +79,6 @@ int	main(int argc, char **argv)
 		// pthread_detach(data->threads[i]);
 		i++;
 	}
+	pthread_mutex_destroy(&g_lock_print);
 	return (0);
 }
