@@ -4,11 +4,6 @@ int	ft_get_args(t_common_data *data, t_data_type type)
 {
 	int	result;
 
-	while (pthread_mutex_trylock(&(data->lock_args)))
-	{
-		sleep(10);
-		// lock_printf("----lock_args %d\n", pthread_mutex_trylock(&(data->lock_args)));
-	}
 	pthread_mutex_lock(&(data->lock_args));
 	if (type == NUM_OF_PHILO)
 		result = data->args->num_of_philo;
