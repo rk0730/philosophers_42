@@ -6,9 +6,7 @@ int	ft_is_dead(t_common_data *data)
 	int	num_of_philo;
 	int	i;
 
-	// lock_printf("before get_args\n");
 	num_of_philo = ft_get_args(data, NUM_OF_PHILO);
-	// lock_printf("num of philo: %d\n", num_of_philo);
 	i = 0;
 	while (i < num_of_philo)
 	{

@@ -47,7 +47,6 @@ void	ft_gen_threads(t_common_data *data)
 		data->philos[i].last_meal_time = 0;
 		i++;
 	}
-	lock_printf("finish ft_gen_thread\n");
 	pthread_mutex_unlock(&(data->lock_args));
 }
 
@@ -69,7 +68,6 @@ int	main(int argc, char **argv)
 	// スレッドの終了を待つ
 	while (!ft_is_finished(data))
 		(void)argc;
-	RKITAO("point1\n");
 	if (ft_is_dead(data) > 0)
 		lock_printf("%u %d died\n", ft_get_time(data), ft_is_dead(data));
 	i = 0;
