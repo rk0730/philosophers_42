@@ -7,7 +7,7 @@ int	ft_get_args(t_common_data *data, t_data_type type)
 	while (pthread_mutex_trylock(&(data->lock_args)))
 	{
 		sleep(10);
-		// printf("----lock_args %d\n", pthread_mutex_trylock(&(data->lock_args)));
+		// lock_printf("----lock_args %d\n", pthread_mutex_trylock(&(data->lock_args)));
 	}
 	pthread_mutex_lock(&(data->lock_args));
 	if (type == NUM_OF_PHILO)
@@ -23,7 +23,7 @@ int	ft_get_args(t_common_data *data, t_data_type type)
 	else
 	{
 		result = -1;
-		printf("error in ft_get_args");
+		lock_printf("error in ft_get_args");
 	}
 	pthread_mutex_unlock(&(data->lock_args));
 	return (result);
@@ -52,12 +52,12 @@ void	ft_message(t_philo *philo, t_message_type type)
 	if (ft_is_finished(philo->data) == 0)
 	{
 		if (type == FIRST_FORK || type == SECOND_FORK)
-			printf("%u %d has taken a fork\n", time, philo->id);
+			lock_printf("%u %d has taken a fork\n", time, philo->id);
 		if (type == SECOND_FORK)
-			printf("%u %d is eating\n", time, philo->id);
+			lock_printf("%u %d is eating\n", time, philo->id);
 		if (type == SLEEP)
-			printf("%u %d is sleeping\n", time, philo->id);
+			lock_printf("%u %d is sleeping\n", time, philo->id);
 		if (type == THINK)
-			printf("%u %d is thinking\n", time, philo->id);
+			lock_printf("%u %d is thinking\n", time, philo->id);
 	}
 }
