@@ -67,13 +67,17 @@ int	main(int argc, char **argv)
 	RKITAO("after thread\n");
 	// スレッドの終了を待つ
 	while (!ft_is_finished(data))
+	{
+		usleep(10); //これを入れないとhelgrindでうまく動かない
 		(void)argc;
+	}
 	if (ft_is_dead(data) > 0)
 		lock_printf("%u %d died\n", ft_get_time(data), ft_is_dead(data));
 	i = 0;
 	while (i < data->args->num_of_philo)
 	{
-		pthread_detach(data->threads[i]);
+		// pthread_detach(data->threads[i]);
+		pthread_join(data->threads[i], NULL);
 		i++;
 	}
 	pthread_mutex_destroy(&g_lock_print);
