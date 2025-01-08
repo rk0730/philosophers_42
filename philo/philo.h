@@ -86,6 +86,7 @@ int					ft_is_dead(t_common_data *data);
 int					ft_is_finished(t_common_data *data);
 int					ft_get_args(t_common_data *data, t_data_type type);
 void				ft_message(t_philo *philo, t_message_type type);
+int	ft_get_last_meal(int id, t_common_data *data);
 void	lock_printf(const char *fmt, ...);
 
 
