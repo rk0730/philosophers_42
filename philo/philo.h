@@ -9,7 +9,7 @@
 # include <stdarg.h>
 
 # ifdef RKITAO_DEBUG
-#  define RKITAO(fmt, ...) lock_printf(fmt, ##__VA_ARGS__)
+#  define RKITAO(fmt, ...) printf(fmt, ##__VA_ARGS__)
 # else
 #  define RKITAO(fmt, ...)
 # endif
@@ -40,7 +40,7 @@ typedef struct s_common_data
 	int				*last_meal_time;
 	struct s_philo	*philos;
 	pthread_t		*threads;
-
+	pthread_mutex_t lock_printf;
 }					t_common_data;
 
 // 各々が使うデータ　threadの引数になる
@@ -87,7 +87,6 @@ int					ft_is_finished(t_common_data *data);
 int					ft_get_args(t_common_data *data, t_data_type type);
 void				ft_message(t_philo *philo, t_message_type type);
 int	ft_get_last_meal(int id, t_common_data *data);
-void	lock_printf(const char *fmt, ...);
 
 
 #endif

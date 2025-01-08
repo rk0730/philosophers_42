@@ -24,6 +24,7 @@ void	ft_init_common_data(t_common_data *data)
 	data->threads = (pthread_t *)malloc(sizeof(pthread_t) * data->args->num_of_philo);
 	pthread_mutex_init(&(data->lock_args), NULL);
 	pthread_mutex_init(&data->lock_data, NULL);
+	pthread_mutex_init(&data->lock_printf, NULL);
 	gettimeofday(&data->start_time, NULL);
 }
 
@@ -39,6 +40,7 @@ void	ft_cleanup_common_data(t_common_data *data)
 	}
 	pthread_mutex_destroy(&(data->lock_args));
 	pthread_mutex_destroy(&data->lock_data);
+	pthread_mutex_destroy(&data->lock_printf);
 	free(data->forks);
 	free(data->eat_count);
 	free(data->last_meal_time);
@@ -104,7 +106,11 @@ int	main(int argc, char **argv)
 		(void)argc;
 	}
 	if (ft_is_dead(data) > 0)
-		lock_printf("%u %d died\n", ft_get_time(data), ft_is_dead(data));
+	{
+		pthread_mutex_lock(&data->lock_printf);
+		printf("%u %d died\n", ft_get_time(data), ft_is_dead(data));
+		pthread_mutex_unlock(&data->lock_printf);
+	}
 	i = 0;
 	while (i < data->args->num_of_philo)
 	{
