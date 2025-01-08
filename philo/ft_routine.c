@@ -25,6 +25,7 @@ void	ft_get_fork(t_philo *philo)
 void	*ft_routine(void *arg)
 {
 	t_philo	*philo;
+	int		tmp;
 
 	philo = (t_philo *)arg;
 	RKITAO("%d start\n", philo->id);
@@ -45,7 +46,10 @@ void	*ft_routine(void *arg)
 	while (1)
 	{
 		ft_get_fork(philo);
-		philo->last_meal_time = ft_get_time(philo->data);
+		tmp = ft_get_time(philo->data);
+		pthread_mutex_lock(&philo->data->lock_data);
+		*philo->my_last_meal_time = tmp;
+		pthread_mutex_unlock(&philo->data->lock_data);
 		ft_usleep(philo, ft_get_time(philo->data) + ft_get_args(philo->data, TIME_TO_EAT));
 		pthread_mutex_lock(&philo->data->lock_data);
 		*(philo->my_eat_count) = *(philo->my_eat_count) + 1;
