@@ -8,6 +8,9 @@ philo
 !philo/
 philo_rkitao
 
+# テスター
+LazyPhilosophersTester
+
 # devontainer設定ファイル
 .devcontainer/
 
