@@ -10,10 +10,12 @@ void	ft_init_common_data(t_common_data *data)
 	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 			* data->args->num_of_philo);
 	data->eat_count = (int *)malloc(sizeof(int) * data->args->num_of_philo);
+	data->last_meal_time = (int *)malloc(sizeof(int) * data->args->num_of_philo);
 	i = 0;
 	while (i < data->args->num_of_philo)
 	{
 		data->eat_count[i] = 0;
+		data->last_meal_time[i] = 0;
 		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
@@ -39,6 +41,7 @@ void	ft_cleanup_common_data(t_common_data *data)
 	pthread_mutex_destroy(&data->lock_data);
 	free(data->forks);
 	free(data->eat_count);
+	free(data->last_meal_time);
 	free(data->philos);
 	free(data->threads);
 	free(data->args);
@@ -62,9 +65,9 @@ void	ft_gen_threads(t_common_data *data)
 			data->philos[i].l_fork = &data->forks[i - 1];
 		data->philos[i].r_fork = &data->forks[i];
 		data->philos[i].my_eat_count = &data->eat_count[i];
+		data->philos[i].my_last_meal_time = &data->last_meal_time[i];
 		pthread_create(&(data->threads[i]), NULL, ft_routine,
 			&(data->philos[i]));
-		data->philos[i].last_meal_time = 0;
 		i++;
 	}
 	pthread_mutex_unlock(&(data->lock_args));

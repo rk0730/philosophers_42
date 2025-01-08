@@ -37,6 +37,7 @@ typedef struct s_common_data
 	struct timeval	start_time;
 	// int				dead;
 	int				*eat_count;
+	int				*last_meal_time;
 	struct s_philo	*philos;
 	pthread_t		*threads;
 
@@ -51,7 +52,7 @@ typedef struct s_philo
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
 	int				*my_eat_count;
-	int				last_meal_time;
+	int				*my_last_meal_time;
 }					t_philo;
 
 typedef enum e_message_type
