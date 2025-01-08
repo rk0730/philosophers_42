@@ -30,7 +30,7 @@ int	ft_get_last_meal(int id, t_common_data *data)
 	int	result;
 
 	pthread_mutex_lock(&data->lock_data);
-	result = *(data->philos[id-1].my_last_meal_time);
+	result = *(data->philos[id - 1].my_last_meal_time);
 	pthread_mutex_unlock(&data->lock_data);
 	return (result);
 }
@@ -54,7 +54,8 @@ void	ft_message(t_philo *philo, t_message_type type)
 	int	time;
 
 	time = ft_get_time(philo->data);
-	RKITAO("ft_is_finished %d at %d\n", ft_is_finished(philo->data), ft_get_time(philo->data));
+	RKITAO("ft_is_finished %d at %d\n", ft_is_finished(philo->data),
+		ft_get_time(philo->data));
 	if (ft_is_finished(philo->data) == 0)
 	{
 		pthread_mutex_lock(&philo->data->lock_printf);
