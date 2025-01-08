@@ -24,6 +24,17 @@ int	ft_get_args(t_common_data *data, t_data_type type)
 	return (result);
 }
 
+// idのphiloのmy_last_mealを返す
+int	ft_get_last_meal(int id, t_common_data *data)
+{
+	int	result;
+
+	pthread_mutex_lock(&data->lock_data);
+	result = *(data->philos[id-1].my_last_meal_time);
+	pthread_mutex_unlock(&data->lock_data);
+	return (result);
+}
+
 // startからの経過時間（ミリ秒）を返す
 int	ft_get_time(t_common_data *data)
 {
