@@ -1,7 +1,5 @@
 #include "philo.h"
 
-pthread_mutex_t g_lock_print;
-
 void	ft_init_common_data(t_common_data *data)
 {
 	int	i;
@@ -80,7 +78,6 @@ int	main(int argc, char **argv)
 	t_common_data	*data;
 	int				i;
 
-	pthread_mutex_init(&g_lock_print, NULL);
 	data = (t_common_data *)malloc(sizeof(t_common_data));
 	RKITAO("debug mode\n");
 	if (ft_arg(argc, argv, data) == 1)
@@ -119,6 +116,5 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	ft_cleanup_common_data(data);
-	pthread_mutex_destroy(&g_lock_print);
 	return (0);
 }

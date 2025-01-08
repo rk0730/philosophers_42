@@ -14,8 +14,6 @@
 #  define RKITAO(fmt, ...)
 # endif
 
-extern pthread_mutex_t		g_lock_print;
-
 typedef struct s_args
 {
 	//引数からもらう情報
