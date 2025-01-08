@@ -1,7 +1,7 @@
 #include "philo.h"
 
 // 最大でtimeミリ秒まで待機する。ft_is_finishedがtrueの場合はすぐに終わらせる
-void	ft_usleep(t_philo *philo, int time)
+void	ft_msleep(t_philo *philo, int time)
 {
 	while (ft_get_time(philo->data) < time && !ft_is_finished(philo->data))
 		usleep(50);
@@ -51,7 +51,7 @@ void	*ft_routine(void *arg)
 	RKITAO("%d start\n", philo->id);
 	// 最初の調整待機時間
 	if (philo->id % 2 == 1)
-		ft_usleep(philo, ft_get_args(philo->data, TIME_TO_EAT) / 2);
+		ft_msleep(philo, ft_get_args(philo->data, TIME_TO_EAT) / 2);
 	while (1)
 	{
 		ft_get_fork(philo);
@@ -66,7 +66,7 @@ void	*ft_routine(void *arg)
 		pthread_mutex_lock(&philo->data->lock_data);
 		*philo->my_last_meal_time = tmp;
 		pthread_mutex_unlock(&philo->data->lock_data);
-		ft_usleep(philo, ft_get_time(philo->data) + ft_get_args(philo->data,
+		ft_msleep(philo, ft_get_time(philo->data) + ft_get_args(philo->data,
 				TIME_TO_EAT));
 		pthread_mutex_lock(&philo->data->lock_data);
 		*(philo->my_eat_count) = *(philo->my_eat_count) + 1;
@@ -74,7 +74,7 @@ void	*ft_routine(void *arg)
 		pthread_mutex_unlock(philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
 		ft_message(philo, SLEEP);
-		ft_usleep(philo, ft_get_time(philo->data) + ft_get_args(philo->data,
+		ft_msleep(philo, ft_get_time(philo->data) + ft_get_args(philo->data,
 				TIME_TO_SLEEP));
 		ft_message(philo, THINK);
 	}
