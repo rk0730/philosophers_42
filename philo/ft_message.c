@@ -18,7 +18,7 @@ int	ft_get_args(t_common_data *data, t_data_type type)
 	else
 	{
 		result = -1;
-		lock_printf("error in ft_get_args");
+		printf("error in ft_get_args");
 	}
 	pthread_mutex_unlock(&(data->lock_args));
 	return (result);
@@ -57,13 +57,15 @@ void	ft_message(t_philo *philo, t_message_type type)
 	RKITAO("ft_is_finished %d at %d\n", ft_is_finished(philo->data), ft_get_time(philo->data));
 	if (ft_is_finished(philo->data) == 0)
 	{
+		pthread_mutex_lock(&philo->data->lock_printf);
 		if (type == FIRST_FORK || type == SECOND_FORK)
-			lock_printf("%u %d has taken a fork\n", time, philo->id);
+			printf("%u %d has taken a fork\n", time, philo->id);
 		if (type == SECOND_FORK)
-			lock_printf("%u %d is eating\n", time, philo->id);
+			printf("%u %d is eating\n", time, philo->id);
 		if (type == SLEEP)
-			lock_printf("%u %d is sleeping\n", time, philo->id);
+			printf("%u %d is sleeping\n", time, philo->id);
 		if (type == THINK)
-			lock_printf("%u %d is thinking\n", time, philo->id);
+			printf("%u %d is thinking\n", time, philo->id);
+		pthread_mutex_unlock(&philo->data->lock_printf);
 	}
 }

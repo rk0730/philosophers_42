@@ -11,7 +11,6 @@ SRCS += $(SRCDIR)/ft_monitor.c
 
 UTILS := utils
 SRCS += $(SRCDIR)/$(UTILS)/ft_utils.c
-SRCS += $(SRCDIR)/$(UTILS)/ft_lock_printf.c
 
 #OBJS
 OBJDIR := objs
