@@ -33,15 +33,15 @@ void	*ft_routine(void *arg)
 	int num_of_philo = ft_get_args(philo->data, NUM_OF_PHILO);
 	if (num_of_philo % 2 == 0)
 	{
-		if (philo->id - 1 % 2 == 0)
-			usleep(ft_get_args(philo->data, TIME_TO_EAT));
+		if ((philo->id - 1) % 2 == 0)
+			ft_usleep(philo, ft_get_args(philo->data, TIME_TO_EAT));
 	}
 	else
 	{
-		if (philo->id - 1 % 2 == 0)
-			usleep((2 * num_of_philo - philo->id - 1)/(num_of_philo - 1) * ft_get_args(philo->data, TIME_TO_EAT));
+		if ((philo->id - 1) % 2 == 0)
+			ft_usleep(philo, (2 * num_of_philo - philo->id + 1) * ft_get_args(philo->data, TIME_TO_EAT) / (num_of_philo - 1));
 		else
-			usleep((num_of_philo - philo->id - 1)/(num_of_philo - 1) * ft_get_args(philo->data, TIME_TO_EAT));
+			ft_usleep(philo, (num_of_philo - philo->id + 1) * ft_get_args(philo->data, TIME_TO_EAT) / (num_of_philo - 1));
 	}
 	while (1)
 	{
