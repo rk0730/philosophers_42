@@ -102,8 +102,7 @@ int	main(int argc, char **argv)
 	// スレッドの終了を待つ
 	while (!ft_is_finished(data))
 	{
-		usleep(10); //これを入れないとhelgrindでうまく動かない
-		(void)argc;
+		usleep(100); //これを入れないとhelgrindでうまく動かない
 	}
 	if (ft_is_dead(data) > 0)
 	{
