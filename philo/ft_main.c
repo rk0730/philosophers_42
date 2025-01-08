@@ -80,6 +80,15 @@ int	main(int argc, char **argv)
 	RKITAO("debug mode\n");
 	if (ft_arg(argc, argv, data) == 1)
 		exit(EXIT_FAILURE);
+	// philosopherが1人の時
+	if (data->args->num_of_philo == 1)
+	{
+		usleep(data->args->time_to_die * 1000);
+		printf("%d 1 died\n", data->args->time_to_die);
+		free(data->args);
+		free(data);
+		return (0);
+	}
 	ft_init_common_data(data);
 	// スレッドを作成する
 	RKITAO("before thread\n");
