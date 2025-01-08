@@ -10,15 +10,9 @@ void	ft_usleep(t_philo *philo, int time)
 // idが奇数なら左から取る、偶数なら右から取る
 void	ft_get_fork(t_philo *philo)
 {
-	if (philo->id % 2 == 1)
-		pthread_mutex_lock(philo->l_fork);
-	else
-		pthread_mutex_lock(philo->r_fork);
+	pthread_mutex_lock(philo->l_fork);
 	ft_message(philo, FIRST_FORK);
-	if (philo->id % 2 == 1)
-		pthread_mutex_lock(philo->r_fork);
-	else
-		pthread_mutex_lock(philo->l_fork);
+	pthread_mutex_lock(philo->r_fork);
 	ft_message(philo, SECOND_FORK);
 }
 
@@ -30,19 +24,8 @@ void	*ft_routine(void *arg)
 	philo = (t_philo *)arg;
 	RKITAO("%d start\n", philo->id);
 	// 最初の調整待機時間
-	int num_of_philo = ft_get_args(philo->data, NUM_OF_PHILO);
-	if (num_of_philo % 2 == 0)
-	{
-		if ((philo->id - 1) % 2 == 0)
-			ft_usleep(philo, ft_get_args(philo->data, TIME_TO_EAT));
-	}
-	else
-	{
-		if ((philo->id - 1) % 2 == 0)
-			ft_usleep(philo, (2 * num_of_philo - philo->id + 1) * ft_get_args(philo->data, TIME_TO_EAT) / (num_of_philo - 1));
-		else
-			ft_usleep(philo, (num_of_philo - philo->id + 1) * ft_get_args(philo->data, TIME_TO_EAT) / (num_of_philo - 1));
-	}
+	if (philo->id % 2 == 1)
+		ft_usleep(philo, ft_get_args(philo->data, TIME_TO_EAT) / 2);
 	while (1)
 	{
 		ft_get_fork(philo);
