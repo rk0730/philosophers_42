@@ -30,19 +30,8 @@ void	*ft_routine(void *arg)
 	philo = (t_philo *)arg;
 	RKITAO("%d start\n", philo->id);
 	// 最初の調整待機時間
-	int num_of_philo = ft_get_args(philo->data, NUM_OF_PHILO);
-	if (num_of_philo % 2 == 0)
-	{
-		if ((philo->id - 1) % 2 == 0)
-			ft_usleep(philo, ft_get_args(philo->data, TIME_TO_EAT));
-	}
-	else
-	{
-		if ((philo->id - 1) % 2 == 0)
-			ft_usleep(philo, (2 * num_of_philo - philo->id + 1) * ft_get_args(philo->data, TIME_TO_EAT) / (num_of_philo - 1));
-		else
-			ft_usleep(philo, (num_of_philo - philo->id + 1) * ft_get_args(philo->data, TIME_TO_EAT) / (num_of_philo - 1));
-	}
+	if (philo->id % 2 == 1)
+		ft_usleep(philo, ft_get_args(philo->data, TIME_TO_EAT) / 2);
 	while (1)
 	{
 		ft_get_fork(philo);
