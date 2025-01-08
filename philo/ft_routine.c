@@ -1,14 +1,14 @@
 #include "philo.h"
 
 // 最大でtimeミリ秒まで待機する。ft_is_finishedがtrueの場合はすぐに終わらせる
-void	ft_msleep(t_philo *philo, int time)
+static void	ft_msleep(t_philo *philo, int time)
 {
 	while (ft_get_time(philo->data) < time && !ft_is_finished(philo->data))
 		usleep(50);
 }
 
 // 自分の方がidのphiloよりもlast_meal_timeが短い（危ない）状態になったらlockする
-void	ft_get_fork_h(t_philo *philo, int id, pthread_mutex_t *fork)
+static void	ft_get_fork_h(t_philo *philo, int id, pthread_mutex_t *fork)
 {
 	while (!ft_is_finished(philo->data)
 		&& *philo->my_last_meal_time > ft_get_last_meal(id, philo->data))
