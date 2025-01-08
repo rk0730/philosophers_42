@@ -46,6 +46,13 @@ void	*ft_routine(void *arg)
 	while (1)
 	{
 		ft_get_fork(philo);
+		if (ft_is_finished(philo->data))
+		{
+			pthread_mutex_unlock(philo->l_fork);
+			pthread_mutex_unlock(philo->r_fork);
+			RKITAO("%d end\n", philo->id);
+			break ;
+		}
 		tmp = ft_get_time(philo->data);
 		pthread_mutex_lock(&philo->data->lock_data);
 		*philo->my_last_meal_time = tmp;
@@ -59,11 +66,6 @@ void	*ft_routine(void *arg)
 		ft_message(philo, SLEEP);
 		ft_usleep(philo, ft_get_time(philo->data) + ft_get_args(philo->data, TIME_TO_SLEEP));
 		ft_message(philo, THINK);
-		if (ft_is_finished(philo->data))
-		{
-			RKITAO("%d end\n", philo->id);
-			break ;
-		}
 	}
 	return (NULL);
 }
