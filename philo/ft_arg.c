@@ -9,9 +9,9 @@ int	ft_arg(int argc, char **argv, t_common_data *data)
 	if (argc < 5 || argc > 6)
 	{
 		write(STDERR_FILENO,
-			"Usage: ./philo number_of_philosophers time_to_die time_to_eat "
-			"time_to_sleep [number_of_times_each_philosopher_must_eat]\n",
-			120);
+				"Usage: ./philo number_of_philosophers time_to_die time_to_eat "
+				"time_to_sleep [number_of_times_each_philosopher_must_eat]\n",
+				120);
 		return (1);
 	}
 	// 引数がすべて数字かどうかチェック
@@ -40,8 +40,8 @@ int	ft_arg(int argc, char **argv, t_common_data *data)
 		data->args->num_philo_must_eat = -1;
 	// 引数が不正な場合の処理
 	if (data->args->num_of_philo <= 0 || data->args->time_to_die <= 0
-		|| data->args->time_to_eat <= 0 || data->args->time_to_sleep <= 0 || (argc == 6
-			&& data->args->num_philo_must_eat <= 0))
+		|| data->args->time_to_eat <= 0 || data->args->time_to_sleep <= 0
+		|| (argc == 6 && data->args->num_philo_must_eat <= 0))
 	{
 		write(STDERR_FILENO, "Invalid argument\n", 17);
 		return (1);

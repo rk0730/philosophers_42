@@ -10,7 +10,8 @@ void	ft_usleep(t_philo *philo, int time)
 // 自分の方がidのphiloよりもlast_meal_timeが短い（危ない）状態になったらlockする
 void	ft_get_fork_h(t_philo *philo, int id, pthread_mutex_t *fork)
 {
-	while (!ft_is_finished(philo->data) && *philo->my_last_meal_time > ft_get_last_meal(id, philo->data))
+	while (!ft_is_finished(philo->data)
+		&& *philo->my_last_meal_time > ft_get_last_meal(id, philo->data))
 		usleep(100);
 	pthread_mutex_lock(fork);
 }
@@ -18,7 +19,7 @@ void	ft_get_fork_h(t_philo *philo, int id, pthread_mutex_t *fork)
 // idが奇数なら左から取る、偶数なら右から取る
 void	ft_get_fork(t_philo *philo)
 {
-	int l_id;
+	int	l_id;
 	int	r_id;
 
 	if (philo->id == 1)
@@ -65,14 +66,16 @@ void	*ft_routine(void *arg)
 		pthread_mutex_lock(&philo->data->lock_data);
 		*philo->my_last_meal_time = tmp;
 		pthread_mutex_unlock(&philo->data->lock_data);
-		ft_usleep(philo, ft_get_time(philo->data) + ft_get_args(philo->data, TIME_TO_EAT));
+		ft_usleep(philo, ft_get_time(philo->data) + ft_get_args(philo->data,
+				TIME_TO_EAT));
 		pthread_mutex_lock(&philo->data->lock_data);
 		*(philo->my_eat_count) = *(philo->my_eat_count) + 1;
 		pthread_mutex_unlock(&philo->data->lock_data);
 		pthread_mutex_unlock(philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
 		ft_message(philo, SLEEP);
-		ft_usleep(philo, ft_get_time(philo->data) + ft_get_args(philo->data, TIME_TO_SLEEP));
+		ft_usleep(philo, ft_get_time(philo->data) + ft_get_args(philo->data,
+				TIME_TO_SLEEP));
 		ft_message(philo, THINK);
 	}
 	return (NULL);
