@@ -42,10 +42,30 @@ void	ft_get_fork(t_philo *philo)
 	ft_message(philo, SECOND_FORK);
 }
 
+static void	ft_routine_h(t_philo *philo)
+{
+	int		tmp;
+
+	tmp = ft_get_time(philo->data);
+	pthread_mutex_lock(&philo->data->lock_data);
+	*philo->my_last_meal_time = tmp;
+	pthread_mutex_unlock(&philo->data->lock_data);
+	ft_msleep(philo, ft_get_time(philo->data) + ft_get_args(philo->data,
+			TIME_TO_EAT));
+	pthread_mutex_lock(&philo->data->lock_data);
+	*(philo->my_eat_count) = *(philo->my_eat_count) + 1;
+	pthread_mutex_unlock(&philo->data->lock_data);
+	pthread_mutex_unlock(philo->l_fork);
+	pthread_mutex_unlock(philo->r_fork);
+	ft_message(philo, SLEEP);
+	ft_msleep(philo, ft_get_time(philo->data) + ft_get_args(philo->data,
+			TIME_TO_SLEEP));
+	ft_message(philo, THINK);
+}
+
 void	*ft_routine(void *arg)
 {
 	t_philo	*philo;
-	int		tmp;
 
 	philo = (t_philo *)arg;
 	RKITAO("%d start\n", philo->id);
@@ -62,21 +82,7 @@ void	*ft_routine(void *arg)
 			RKITAO("%d end\n", philo->id);
 			break ;
 		}
-		tmp = ft_get_time(philo->data);
-		pthread_mutex_lock(&philo->data->lock_data);
-		*philo->my_last_meal_time = tmp;
-		pthread_mutex_unlock(&philo->data->lock_data);
-		ft_msleep(philo, ft_get_time(philo->data) + ft_get_args(philo->data,
-				TIME_TO_EAT));
-		pthread_mutex_lock(&philo->data->lock_data);
-		*(philo->my_eat_count) = *(philo->my_eat_count) + 1;
-		pthread_mutex_unlock(&philo->data->lock_data);
-		pthread_mutex_unlock(philo->l_fork);
-		pthread_mutex_unlock(philo->r_fork);
-		ft_message(philo, SLEEP);
-		ft_msleep(philo, ft_get_time(philo->data) + ft_get_args(philo->data,
-				TIME_TO_SLEEP));
-		ft_message(philo, THINK);
+		ft_routine_h(philo);
 	}
 	return (NULL);
 }
