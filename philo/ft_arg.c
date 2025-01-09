@@ -1,17 +1,16 @@
 #include "philo.h"
 
-int	ft_arg(int argc, char **argv, t_common_data *data)
+static int	ft_arg_check(int argc, char **argv)
 {
 	int	i;
 
-	data->args = (t_args *)malloc(sizeof(t_args));
 	// 引数の数が正しいか確認
 	if (argc < 5 || argc > 6)
 	{
 		write(STDERR_FILENO,
-				"Usage: ./philo number_of_philosophers time_to_die time_to_eat "
-				"time_to_sleep [number_of_times_each_philosopher_must_eat]\n",
-				120);
+			"Usage: ./philo number_of_philosophers time_to_die time_to_eat "
+			"time_to_sleep [number_of_times_each_philosopher_must_eat]\n",
+			120);
 		return (1);
 	}
 	// 引数がすべて数字かどうかチェック
@@ -29,6 +28,14 @@ int	ft_arg(int argc, char **argv, t_common_data *data)
 			"Invalid argument. All arguments should be digits.\n", 50);
 		return (1);
 	}
+	return (0);
+}
+
+int	ft_arg(int argc, char **argv, t_common_data *data)
+{
+	data->args = (t_args *)malloc(sizeof(t_args));
+	if (ft_arg_check(argc, argv) == 1)
+		return (1);
 	// 引数を数値に変換
 	data->args->num_of_philo = ft_atoi(argv[1]);
 	data->args->time_to_die = ft_atoi(argv[2]);
