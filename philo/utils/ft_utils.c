@@ -50,8 +50,8 @@ static int	ft_atoi_helper(const char *start)
 
 int	ft_atoi(const char *str)
 {
-	int sign;
-	int result;
+	int	sign;
+	int	result;
 
 	sign = 1;
 	result = 0;
