@@ -38,7 +38,7 @@ typedef struct s_common_data
 	int				*last_meal_time;
 	struct s_philo	*philos;
 	pthread_t		*threads;
-	pthread_mutex_t lock_printf;
+	pthread_mutex_t	lock_printf;
 }					t_common_data;
 
 // 各々が使うデータ　threadの引数になる
@@ -68,7 +68,6 @@ typedef enum e_data_type
 	TIME_TO_EAT,
 	TIME_TO_SLEEP,
 	NUM_PHILO_MUST_EAT,
-
 }					t_data_type;
 
 // utils
@@ -84,7 +83,6 @@ int					ft_is_dead(t_common_data *data);
 int					ft_is_finished(t_common_data *data);
 int					ft_get_args(t_common_data *data, t_data_type type);
 void				ft_message(t_philo *philo, t_message_type type);
-int	ft_get_last_meal(int id, t_common_data *data);
-
+int					ft_get_last_meal(int id, t_common_data *data);
 
 #endif
