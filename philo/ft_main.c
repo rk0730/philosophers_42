@@ -76,27 +76,10 @@ void	ft_gen_threads(t_common_data *data)
 	pthread_mutex_unlock(&(data->lock_args));
 }
 
-int	main(int argc, char **argv)
+void	ft_loop(t_common_data *data)
 {
-	t_common_data	*data;
-	int				i;
+	int	i;
 
-	data = (t_common_data *)malloc(sizeof(t_common_data));
-	RKITAO("debug mode\n");
-	if (ft_arg(argc, argv, data) == 1)
-		exit(EXIT_FAILURE);
-	// philosopherが1人の時
-	if (data->args->num_of_philo == 1)
-	{
-		usleep(data->args->time_to_die * 1000);
-		printf("%d 1 died\n", data->args->time_to_die);
-		free(data->args);
-		free(data);
-		return (0);
-	}
-	ft_init_common_data(data);
-	// スレッドを作成する
-	RKITAO("before thread\n");
 	ft_gen_threads(data);
 	RKITAO("after thread\n");
 	// スレッドの終了を待つ
@@ -118,5 +101,28 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	ft_cleanup_common_data(data);
+}
+
+int	main(int argc, char **argv)
+{
+	t_common_data	*data;
+
+	data = (t_common_data *)malloc(sizeof(t_common_data));
+	RKITAO("debug mode\n");
+	if (ft_arg(argc, argv, data) == 1)
+		exit(EXIT_FAILURE);
+	// philosopherが1人の時
+	if (data->args->num_of_philo == 1)
+	{
+		usleep(data->args->time_to_die * 1000);
+		printf("%d 1 died\n", data->args->time_to_die);
+		free(data->args);
+		free(data);
+		return (0);
+	}
+	ft_init_common_data(data);
+	// スレッドを作成する
+	RKITAO("before thread\n");
+	ft_loop(data);
 	return (0);
 }
