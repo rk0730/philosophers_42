@@ -8,12 +8,6 @@
 # include <unistd.h>
 # include <stdarg.h>
 
-# ifdef RKITAO_DEBUG
-#  define RKITAO(fmt, ...) printf(fmt, ##__VA_ARGS__)
-# else
-#  define RKITAO(fmt, ...)
-# endif
-
 typedef struct s_args
 {
 	//引数からもらう情報

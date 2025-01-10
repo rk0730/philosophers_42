@@ -54,8 +54,6 @@ void	ft_message(t_philo *philo, t_message_type type)
 	int	time;
 
 	time = ft_get_time(philo->data);
-	RKITAO("ft_is_finished %d at %d\n", ft_is_finished(philo->data),
-		ft_get_time(philo->data));
 	if (ft_is_finished(philo->data) == 0)
 	{
 		pthread_mutex_lock(&philo->data->lock_printf);
