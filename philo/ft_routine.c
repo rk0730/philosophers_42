@@ -68,7 +68,6 @@ void	*ft_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	RKITAO("%d start\n", philo->id);
 	// 最初の調整待機時間
 	if (philo->id % 2 == 1)
 		ft_msleep(philo, ft_get_args(philo->data, TIME_TO_EAT) / 2);
@@ -79,7 +78,6 @@ void	*ft_routine(void *arg)
 		{
 			pthread_mutex_unlock(philo->l_fork);
 			pthread_mutex_unlock(philo->r_fork);
-			RKITAO("%d end\n", philo->id);
 			break ;
 		}
 		ft_routine_h(philo);

@@ -81,7 +81,6 @@ void	ft_loop(t_common_data *data)
 	int	i;
 
 	ft_gen_threads(data);
-	RKITAO("after thread\n");
 	// スレッドの終了を待つ
 	while (!ft_is_finished(data))
 	{
@@ -108,7 +107,6 @@ int	main(int argc, char **argv)
 	t_common_data	*data;
 
 	data = (t_common_data *)malloc(sizeof(t_common_data));
-	RKITAO("debug mode\n");
 	if (ft_arg(argc, argv, data) == 1)
 		exit(EXIT_FAILURE);
 	// philosopherが1人の時
@@ -122,7 +120,6 @@ int	main(int argc, char **argv)
 	}
 	ft_init_common_data(data);
 	// スレッドを作成する
-	RKITAO("before thread\n");
 	ft_loop(data);
 	return (0);
 }
