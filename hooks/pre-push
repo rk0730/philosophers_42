@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo "Running make re before push..."
+
+# make re を実行
+if make -C philo re; then
+	echo "make re succeeded. Proceeding with push."
+	exit 0
+else
+	echo "make re failed. Push aborted."
+	exit 1
+fi
